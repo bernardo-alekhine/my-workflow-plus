@@ -1,0 +1,24 @@
+{
+  "name": "my-work-flow-plus",
+  "version": "1.0.0",
+  "description": "**My WorkFlow+** is an ERP web application built on the **Django 5.x (Python 3.12)** framework. It provides  **a streamlined** interface for managing clients, products, services, and sales operations. Beyond core management, the  application delivers **actionable insights** through integrated dashboards and maintains robust audit logs. Its  **modular architecture** ensures a balance between user intuition and enterprise-grade scalability.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bernardo-alekhine/my-work-flow-plus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/bernardo-alekhine/my-work-flow-plus/issues"
+  },
+  "homepage": "https://github.com/bernardo-alekhine/my-work-flow-plus#readme",
+  "devDependencies": {
+    "tailwindcss": "^4.2.1"
+  }
+}
