@@ -19,6 +19,8 @@
   },
   "homepage": "https://github.com/bernardo-alekhine/my-work-flow-plus#readme",
   "devDependencies": {
-    "tailwindcss": "^4.2.1"
+    "mermaid": "^11.12.3",
+    "tailwindcss": "^4.2.1",
+    "typescript": "^5.9.3"
   }
 }

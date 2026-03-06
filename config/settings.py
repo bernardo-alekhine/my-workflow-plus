@@ -49,6 +49,7 @@ INSTALLED_APPS = [
     "apps.human_resources",
     "apps.financial",
     "apps.services",
+    "apps.audit_log",
 ]
 
 MIDDLEWARE = [
