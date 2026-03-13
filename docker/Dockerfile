@@ -1,10 +1,10 @@
 FROM python:3.12
  
 # Create the app directory
-RUN mkdir /my-workflow-plus
+RUN mkdir /app
 
 # Set the working directory inside the container
-WORKDIR /my-workflow-plus
+WORKDIR /app
  
 # Set environment variables 
 # Prevents Python from writing pyc files to disk
@@ -16,10 +16,10 @@ ENV PYTHONUNBUFFERED=1
 RUN pip install --upgrade pip 
  
 # Copy the Django project  and install dependencies
-# COPY requirements.txt  /app/
+# COPY my-workflow-plus/requirements/base.txt  /app/
  
 # run this command to install all dependencies 
-# RUN pip install --no-cache-dir -r requirements.txt
+# RUN pip install --no-cache-dir -r base.txt
  
 # Copy the Django project to the container
 # COPY . /app/
