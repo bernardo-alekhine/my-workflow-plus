@@ -16,16 +16,16 @@ ENV PYTHONUNBUFFERED=1
 RUN pip install --upgrade pip 
  
 # Copy the Django project  and install dependencies
-# COPY my-workflow-plus/requirements/base-requirements.txt  /app/
+COPY my-workflow-plus/requirements/base-requirements.txt  /app/
  
 # run this command to install all dependencies 
-# RUN pip install --no-cache-dir -r base-requirements.txt
- 
+RUN pip install --no-cache-dir -r base-requirements.txt
+
 # Copy the Django project to the container
-# COPY my-workflow-plus/. /app/
+COPY my-workflow-plus/. /app/
  
 # Expose the Django port
 EXPOSE 8000
  
 # Run Django’s development server
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+CMD ["gunicorn", "--bind", "0.0.0.0:8000", "config.wsgi:application"]

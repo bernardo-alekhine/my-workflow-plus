@@ -2,12 +2,12 @@ services:
   web:
     build: .
     ports:
-      - "${APP_PORT}:5000"
+      - "${APP_PORT}:8000"
     environment:
-      # - SECRET_KEY=$
-      # - DEBUG
-      # - ALLOWED_HOSTS
-      # - DATABASE_URL
+      - DJANGO_SECRET_KEY=$
+      - DJANGO_DEBUG
+      - DJANGO_ALLOWED_HOSTS
+      - DJANGO_DATABASE_URL
 
   # redis:
   #   image: redis:alpine
