@@ -11,3 +11,4 @@ bandit
 django-extensions
 factory-boy
 pytest-cov
+pytest-django

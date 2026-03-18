@@ -25,7 +25,7 @@ RUN apt-get update && \
 
 # Create non-root user and app directory
 RUN useradd -m -r appuser && \
-    mkdir /app && \
+    mkdir -p /app/logs && \
     chown -R appuser:appuser /app
 
 WORKDIR /app
@@ -34,13 +34,14 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/opt/venv/bin:$PATH"
-ENV PYTHONPATH="/app:$PYTHONPATH"
+ENV PYTHONPATH="/app/backend/:$PYTHONPATH"
 
 # Copy Python dependencies from builder
 COPY --from=builder --chown=appuser:appuser /opt/venv /opt/venv
 
-# Copy project files (. already includes gunicorn.conf.py)
 COPY --chown=appuser:appuser . /app/
+
+WORKDIR /app/backend
 
 # Switch to non-root user
 USER appuser

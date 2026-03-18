@@ -15,13 +15,14 @@ import os
 from pathlib import Path
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-BASE_DIR = Path(__file__).resolve().parent.parent.parent
+BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_ROOT = BASE_DIR.parent
 
 env = environ.Env(
     DJANGO_DEBUG=(bool, False)
 )
 
-environ.Env.read_env(BASE_DIR / ".env")
+environ.Env.read_env(PROJECT_ROOT / ".env")
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
@@ -34,8 +35,6 @@ DEBUG = env("DJANGO_DEBUG")
 
 ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
 
-ROOT_URLCONF = "src.config.urls"
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,14 +44,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "src.apps.core",
-    "src.apps.accounts",
-    "src.apps.inventory",
-    "src.apps.human_resources",
-    "src.apps.financial",
-    "src.apps.services",
-    "src.apps.audit_log",
-    "src.apps.purchases",
+    "apps.core",
+    "apps.accounts",
+    "apps.inventory",
+    "apps.human_resources",
+    "apps.financial",
+    "apps.services",
+    "apps.audit_log",
+    "apps.purchases",
 ]
 
 MIDDLEWARE = [
@@ -65,12 +64,12 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "src.config.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
         "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [BASE_DIR / "templates",],
+        "DIRS": [PROJECT_ROOT / "templates",],
         "APP_DIRS": True,
         "OPTIONS": {
             "context_processors": [
@@ -82,7 +81,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "src.config.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
@@ -135,7 +134,7 @@ USE_TZ = True
 STATIC_URL = "static/"
 
 STATICFILES_DIRS = [
-    BASE_DIR / "static",
+    PROJECT_ROOT / "static",
 ]
 
 LOGGING = {
@@ -156,7 +155,7 @@ LOGGING = {
         },
         "file": {
             "class": "logging.FileHandler",
-            "filename": os.path.join(BASE_DIR, "logs", "app.log"),
+            "filename": os.path.join(PROJECT_ROOT, "logs", "app.log"),
             "formatter": "verbose",
         },
     },
