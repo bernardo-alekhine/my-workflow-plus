@@ -12,11 +12,16 @@ RUN python -m venv /opt/venv && \
     /opt/venv/bin/pip install --upgrade pip
 
 # Install dependencies
-COPY my-workflow-plus/requirements/base-requirements.txt .
+COPY requirements/base-requirements.txt .
 RUN /opt/venv/bin/pip install --no-cache-dir -r base-requirements.txt
 
 # Production stage
 FROM python:3.12-slim
+
+# Install curl for healthcheck
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends curl && \
+    rm -rf /var/lib/apt/lists/*
 
 # Create non-root user and app directory
 RUN useradd -m -r appuser && \
@@ -29,13 +34,13 @@ WORKDIR /app
 ENV PYTHONDONTWRITEBYTECODE=1
 ENV PYTHONUNBUFFERED=1
 ENV PATH="/opt/venv/bin:$PATH"
+ENV PYTHONPATH="/app:$PYTHONPATH"
 
 # Copy Python dependencies from builder
 COPY --from=builder --chown=appuser:appuser /opt/venv /opt/venv
 
-# Copy project files
-COPY --chown=appuser:appuser my-workflow-plus/ /app/
-COPY --chown=appuser:appuser gunicorn.conf.py /app/
+# Copy project files (. already includes gunicorn.conf.py)
+COPY --chown=appuser:appuser . /app/
 
 # Switch to non-root user
 USER appuser

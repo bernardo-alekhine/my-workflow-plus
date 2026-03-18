@@ -89,23 +89,22 @@ venv/
 
 README.md
 CHANGELOG.md
-docker-compose.yml
-Dockerfile
-# git
-.git
-.gitattributes
-.gitignore
 
-# Node
+# Node - Frontend specific
 # Logs
-logs
-*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
-# Dependency directories
-node_modules/
+# Dependency directories - catch frontend/node_modules specifically
+frontend/node_modules/
+frontend/**/node_modules/
+frontend/dist/
+frontend/build/
+frontend/.next/
+
+# Catch any other node_modules as fallback
+**/node_modules/
 
 # === Personal / Workspace Overrides ===
 notes/

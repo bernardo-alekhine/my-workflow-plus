@@ -6,10 +6,5 @@ services:
       dockerfile: docker/Dockerfile
     ports:
       - "${APP_PORT}:8000"
-    environment:
-      - DJANGO_SECRET_KEY: ${DJANGO_SECRET_KEY}
-      - DJANGO_ALLOWED_HOSTS: ${DJANGO_ALLOWED_HOSTS}
-      - DJANGO_DATABASE_URL: ${DJANGO_DATABASE_URL}
-      - DJANGO_DEBUG: ${DJANGO_DEBUG}
-      env_file:
-        - .env
+    env_file:
+      - .env
