@@ -18,7 +18,7 @@ from pathlib import Path
 BASE_DIR = Path(__file__).resolve().parent.parent.parent
 
 env = environ.Env(
-    DEBUG=(bool, False)
+    DJANGO_DEBUG=(bool, False)
 )
 
 environ.Env.read_env(BASE_DIR / ".env")
@@ -27,12 +27,14 @@ environ.Env.read_env(BASE_DIR / ".env")
 # See https://docs.djangoproject.com/en/6.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = env("SECRET_KEY")
+SECRET_KEY = env("DJANGO_SECRET_KEY")
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = env("DEBUG")
+DEBUG = env("DJANGO_DEBUG")
 
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = env.list("DJANGO_ALLOWED_HOSTS", default=[])
+
+ROOT_URLCONF = "src.config.urls"
 
 # Application definition
 
@@ -43,14 +45,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "apps.core",
-    "apps.accounts",
-    "apps.inventory",
-    "apps.human_resources",
-    "apps.financial",
-    "apps.services",
-    "apps.audit_log",
-    "apps.purchases",
+    "src.apps.core",
+    "src.apps.accounts",
+    "src.apps.inventory",
+    "src.apps.human_resources",
+    "src.apps.financial",
+    "src.apps.services",
+    "src.apps.audit_log",
+    "src.apps.purchases",
 ]
 
 MIDDLEWARE = [
@@ -63,7 +65,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "config.urls"
+ROOT_URLCONF = "src.config.urls"
 
 TEMPLATES = [
     {
@@ -80,12 +82,12 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "config.wsgi.application"
+WSGI_APPLICATION = "src.config.wsgi.application"
 
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-if "DATABASE_URL" in os.environ:
+if "DJANGO_DATABASE_URL" in os.environ:
     DATABASES = {"default": env.db()}
 else:
     DATABASES = {
@@ -154,7 +156,7 @@ LOGGING = {
         },
         "file": {
             "class": "logging.FileHandler",
-            "filename": "logs/app.log",
+            "filename": os.path.join(BASE_DIR, "logs", "app.log"),
             "formatter": "verbose",
         },
     },
