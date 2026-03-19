@@ -34,9 +34,8 @@ extend-exclude = '''
 mypy_path = "src"
 python_version = "3.12"
 # Required for Django projects:
-plugins = ["mypy_django_plugin.main"]
 strict = true
-plugins.django-stubs.django_settings_module = "config.settings" 
+plugins = ["mypy_django_plugin.main"] 
 exclude = [
     "node_modules",
     "__pycache__",
@@ -46,11 +45,22 @@ exclude = [
     "build"
 ]
 
+[tool.django-stubs]
+django_settings_module = "config.settings"
+
 [tool.pyright]
 pythonVersion = "3.12"
+include = ["backend"]
 typeCheckingMode = "strict"
-include = ["apps"]
-exclude = ["**/node_modules", "**/__pycache__", ".venv", "migrations"]
+exclude = [
+  ".venv",
+  "**/.*",
+  "**/.venv*",
+  "**/venv**",
+  "**/node_modules",
+  "**/__pycache__",
+  "**/migrations",  
+]
 
 [tool.pytest.ini_options]
 pythonpath = ["src"]
@@ -61,3 +71,7 @@ python_files = ["tests.py", "test_*.py", "*_tests.py"]
 
 # Speed up tests
 addopts = "--reuse-db"
+
+[tool.coverage.run]
+source = ["backend"]
+omit = ["*/migrations/*", "manage.py"]

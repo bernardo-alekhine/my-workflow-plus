@@ -362,3 +362,4 @@ notes/
 lab/
 .vscode/
 .devcontainer
+.secrets
