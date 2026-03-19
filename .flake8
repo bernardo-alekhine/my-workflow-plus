@@ -1,11 +1,6 @@
 [flake8]
 max-line-length = 120
-
-# Essential ignores for Black compatibility
-# E203: Whitespace before ':' (Black uses this in slices)
-# W503: Line break occurred before a binary operator (Black style)
 extend-ignore = E203, W503
-
 exclude =
     .git,
     __pycache__,
@@ -15,11 +10,8 @@ exclude =
     venv,
     env,
     .tox
-
-# Standard strict limit
 max-complexity = 10
-
-# Allow specific violations in specific files (e.g., unused imports in __init__)
 per-file-ignores =
-    __init__.py: F401
-    tests/*: S101
+    __init__.py:F401
+    tests/*:S101,F401
+    */tests.py:S101,F401
