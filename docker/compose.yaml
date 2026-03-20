@@ -1,0 +1,21 @@
+name: my-workflow-plus
+services:
+  django_web:
+    image: my-workflow-plus:v0.1.0
+    container_name: django_web_container
+    build:
+      context: ../
+      dockerfile: docker/Dockerfile
+    env_file:
+    - ../.env
+    ports:
+      - "${APP_PORT:-8000}:8000"
+    volumes:
+      # Mount the root folder to /app so changes reflect instantly
+      - ../:/app
+      # Prevents the container's logs folder from being overwritten by your host
+      - /app/logs
+      
+    environment:
+      - DJANGO_SETTINGS_MODULE=backend.config.settings
+      - PYTHONUNBUFFERED=1

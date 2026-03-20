@@ -361,5 +361,4 @@ vite.config.ts.timestamp-*
 notes/
 lab/
 .vscode/
-.devcontainer
 .secrets
