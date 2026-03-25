@@ -41,14 +41,14 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "backend.apps.core",
-    "backend.apps.accounts",
-    "backend.apps.inventory",
-    "backend.apps.human_resources",
-    "backend.apps.financial",
-    "backend.apps.services",
-    "backend.apps.audit_log",
-    "backend.apps.purchases",
+    "apps.core",
+    "apps.accounts",
+    "apps.inventory",
+    "apps.human_resources",
+    "apps.financial",
+    "apps.services",
+    "apps.audit_log",
+    "apps.purchases",
 ]
 
 MIDDLEWARE = [
@@ -61,7 +61,7 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-ROOT_URLCONF = "backend.config.urls"
+ROOT_URLCONF = "config.urls"
 
 TEMPLATES = [
     {
@@ -80,7 +80,7 @@ TEMPLATES = [
     },
 ]
 
-WSGI_APPLICATION = "backend.config.wsgi.application"
+WSGI_APPLICATION = "config.wsgi.application"
 
 
 # Database
