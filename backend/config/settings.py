@@ -15,7 +15,6 @@ import os
 import dj_database_url
 from pathlib import Path
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_ROOT = BASE_DIR.parent
@@ -85,15 +84,15 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-default_sqlite = f"sqlite:///{ (BASE_DIR / 'db.sqlite3').as_posix() }"
+default_sqlite = f"sqlite:///{ (BASE_DIR / 'db.sqlite3').as_posix() }" # noqa
 
 DATABASES = {
     "default": dj_database_url.config(
         # The environment variable to look for
-        env="DJANGO_DATABASE_URL", 
+        env="DJANGO_DATABASE_URL",
         # Fallback SQLite URL if the env var is not found
         default=default_sqlite,
-        conn_max_age=600
+        conn_max_age=600,
     )
 }
 

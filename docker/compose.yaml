@@ -11,7 +11,7 @@ services:
     ports:
       - "${APP_PORT:-8000}:8000"
     volumes:
-      - ../:/app
+      - ../backend:/app/backend
       - /app/venv/
       - logsvolume:/app/logs
     stdin_open: true

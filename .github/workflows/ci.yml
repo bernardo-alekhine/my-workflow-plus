@@ -49,14 +49,30 @@ jobs:
         python -m pip install --upgrade pip
         pip install -r requirements/dev-requirements.txt
 
-    - name: Lint and Format
-      run: |
-        black --check backend/
-        flake8 backend/
-        pyright backend/
-        mypy backend/
+  test:
+    name: Tests
+    needs: build
+    runs-on: ubuntu-latest
 
-    - name: Run Tests
-      run: |
-        coverage run --source=backend backend/manage.py test
-        coverage report
+    steps:
+      - name: Lint and Format
+        run: |
+          black --check backend/
+          flake8 backend/
+          pyright backend/
+          mypy backend/
+
+      - name: Run Tests
+        run: |
+          pytest --cov=backend --cov-report=html
+
+      - name: Upload HTML Coverage Report
+          uses: actions/upload-artifact@v4
+          if: always()
+          with:
+            name: html-coverage-report
+            path: htmlcov/
+
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

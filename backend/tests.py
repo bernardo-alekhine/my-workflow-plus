@@ -4,7 +4,7 @@ from django.test import TestCase
 
 class SimpleHealthCheckTest(TestCase):
     """Basic tests to verify Django is running"""
-    
+
     def test_django_setup(self):
         """Test that Django test framework is working"""
         self.assertTrue(True)
