@@ -1,7 +1,6 @@
 [flake8]
 max-line-length = 120
-# Keep F401 just until implementation of apps / deletion
-extend-ignore = E203, W503, F401
+extend-ignore = E203, W503
 exclude =
     .git,
     __pycache__,
@@ -13,6 +12,5 @@ exclude =
     .tox
 max-complexity = 10
 per-file-ignores =
-    __init__.py:F401
-    tests/*:S101,F401
-    */tests.py:S101,F401
+    tests/*:S101
+    */tests.py:S101
