@@ -53,7 +53,7 @@ django_settings_module = "config.settings"
 [tool.pyright]
 reportArgumentType = "warning"
 pythonVersion = "3.12"
-include = ["backend"]
+include = ["backend/**"]
 # typeCheckingMode = "strict"
 exclude = [
   ".venv",
@@ -74,6 +74,8 @@ python_files = ["tests.py", "test_*.py", "*_tests.py"]
 
 # Speed up tests
 addopts = "--reuse-db"
+
+testpaths = ["backend"]
 
 [tool.coverage.run]
 source = ["backend"]
