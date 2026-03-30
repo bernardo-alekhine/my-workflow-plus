@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/6.0/ref/settings/
 """
 
 import environ
-import os
 import dj_database_url
 from pathlib import Path
 
