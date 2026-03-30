@@ -84,7 +84,7 @@ WSGI_APPLICATION = "config.wsgi.application"
 
 # Database
 # https://docs.djangoproject.com/en/6.0/ref/settings/#databases
-default_sqlite = f"sqlite:///{ (BASE_DIR / 'db.sqlite3').as_posix() }" # noqa
+default_sqlite = f"sqlite:///{ (BASE_DIR / 'db.sqlite3').as_posix() }"  # noqa
 
 DATABASES = {
     "default": dj_database_url.config(
@@ -151,11 +151,6 @@ LOGGING = {
             "class": "logging.StreamHandler",
             "formatter": "verbose",
         },
-        "file": {
-            "class": "logging.FileHandler",
-            "filename": os.path.join(PROJECT_ROOT, "logs", "app.log"),
-            "formatter": "verbose",
-        },
     },
     "loggers": {
         "django": {
@@ -163,12 +158,12 @@ LOGGING = {
             "level": "INFO",
         },
         "config": {
-            "handlers": ["console", "file"],
+            "handlers": ["console"],
             "level": "DEBUG",
             "propagate": False,
         },
         "root": {
-            "handlers": ["console", "file"],
+            "handlers": ["console"],
             "level": "INFO",
         },
     },

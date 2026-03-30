@@ -1,6 +1,7 @@
 [flake8]
 max-line-length = 120
-extend-ignore = E203, W503
+# Keep F401 just until implementation of apps / deletion
+extend-ignore = E203, W503, F401
 exclude =
     .git,
     __pycache__,
