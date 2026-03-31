@@ -13,7 +13,7 @@ jobs:
       DJANGO_SETTINGS_MODULE: config.settings
       PYTHONPATH: ${{ github.workspace }}/backend
       DJANGO_SECRET_KEY: ${{ secrets.CI_DJANGO_SECRET_KEY }}
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      DJANGO_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
       ALLOWED_HOSTS: "localhost,127.0.0.1"
       DEBUG: "False"
 
@@ -107,7 +107,7 @@ jobs:
       DJANGO_SETTINGS_MODULE: config.settings
       PYTHONPATH: ${{ github.workspace }}/backend
       DJANGO_SECRET_KEY: ${{ secrets.CI_DJANGO_SECRET_KEY }}
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      DJANGO_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
       ALLOWED_HOSTS: "localhost,127.0.0.1"
       DEBUG: "False"
 
