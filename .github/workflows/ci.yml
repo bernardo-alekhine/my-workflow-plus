@@ -114,6 +114,11 @@ jobs:
     steps:
       - uses: actions/checkout@v6
 
+      - name: Cleanup previous containers, networks, volumes
+        run: |
+          docker compose -f docker/compose.yaml down --volumes --remove-orphans || true
+          docker network prune -f || true
+
       - name: Create temporary .env for CI
         run: |
           echo "DJANGO_SECRET_KEY=${{ secrets.CI_DJANGO_SECRET_KEY }}" >> .env
