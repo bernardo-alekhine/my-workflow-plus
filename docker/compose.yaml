@@ -16,6 +16,8 @@ services:
       - logsvolume:/app/logs
     stdin_open: true
     tty: true 
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - DJANGO_SETTINGS_MODULE=config.settings
       - PYTHONPATH=/app/backend
@@ -30,8 +32,11 @@ services:
     restart: "no"
     env_file:
       - ../.env
-    command: ["python", "manage.py", "test", "--noinput"]
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command: ["pytest", "backend", "--ds=config.settings"]
 
+  # Mostly use for local development, project will use neon db
   db:
     image: postgres:16
     container_name: postgres-container

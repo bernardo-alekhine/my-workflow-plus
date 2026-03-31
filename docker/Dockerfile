@@ -26,7 +26,7 @@ RUN /opt/venv/bin/pip install --no-cache-dir -r requirements/base-requirements.t
 FROM builder AS tester
 COPY . /app/
 RUN pip install --no-cache-dir -r requirements/dev-requirements.txt
-WORKDIR /app/backend/
+WORKDIR /app
 
 # Production stage
 FROM base AS production
@@ -55,7 +55,7 @@ EXPOSE 8000
 
 # Healthcheck
 HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
-  CMD curl -f http://localhost:8000/ || exit 1
+  CMD curl -f http://localhost:8000/health/ || exit 1
 
 # Run gunicorn
 CMD ["gunicorn", "-c", "gunicorn.conf.py"]

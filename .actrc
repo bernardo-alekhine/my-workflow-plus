@@ -1,0 +1,4 @@
+--env-file .env
+--env ACT=true
+--var ACT=true
+--secret-file .secrets

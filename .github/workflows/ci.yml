@@ -5,7 +5,7 @@ on:
   pull_request:
 
 jobs:
-  test:
+  tests:
     name: Tests
     runs-on: ubuntu-latest
     
@@ -13,10 +13,10 @@ jobs:
       DJANGO_SETTINGS_MODULE: config.settings
       PYTHONPATH: ${{ github.workspace }}/backend
       DJANGO_SECRET_KEY: ${{ secrets.CI_DJANGO_SECRET_KEY }}
-      DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      DJANGO_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
       ALLOWED_HOSTS: "localhost,127.0.0.1"
       DEBUG: "False"
-    
+
     services:
       postgres:
         image: postgres:16
@@ -71,7 +71,7 @@ jobs:
 
   deploy:
     name: Deploy Coverage to GitHub Pages
-    needs: test
+    needs: tests
     runs-on: ubuntu-latest
     if: github.ref == 'refs/heads/main'  # Only deploy from main branch
     
@@ -98,3 +98,80 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+  docker:
+    name: Docker Integration
+    needs: tests
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
+    env:
+      DJANGO_SETTINGS_MODULE: config.settings
+      PYTHONPATH: ${{ github.workspace }}/backend
+      DJANGO_SECRET_KEY: ${{ secrets.CI_DJANGO_SECRET_KEY }}
+      DJANGO_DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
+      ALLOWED_HOSTS: "localhost,127.0.0.1"
+      DEBUG: "False"
+
+    steps:
+      - uses: actions/checkout@v6
+
+      - name: Cleanup previous containers, networks, volumes
+        run: |
+          docker compose -f docker/compose.yaml down --volumes --remove-orphans || true
+          docker network prune -f || true
+
+      - name: Create temporary .env for CI
+        run: |
+          echo "DJANGO_SECRET_KEY=${{ secrets.CI_DJANGO_SECRET_KEY }}" >> .env
+          echo "APP_PORT=8000" >> .env
+          echo "DJANGO_DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/test_db" >> .env
+          echo "DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,host.docker.internal,django_web" >> .env
+          echo "DEBUG=False" >> .env
+                echo "POSTGRES_USER=postgres" >> .env
+          echo "POSTGRES_PASSWORD=password" >> .env
+          echo "POSTGRES_DB=test_db" >> .env
+
+      - name: Run docker compose integration
+        run: docker compose -f docker/compose.yaml --profile test up --build --abort-on-container-exit --exit-code-from django_test
+
+      - name: Cleanup test containers
+        if: always()
+        run: docker compose -f docker/compose.yaml down -v
+
+      - name: Run production container
+        run: docker compose -f docker/compose.yaml up -d --build
+
+      - name: Verify health and DB
+        run: |
+          for i in {1..10}; do
+            STATUS=$(docker inspect django_web_container --format='{{.State.Health.Status}}' 2>/dev/null || echo "starting")
+            if [ "$STATUS" = "healthy" ]; then
+              echo "Container is healthy!"
+              break
+            fi
+            echo "Waiting for health check... ($i/10)"
+            sleep 3
+          done
+          
+          if [ "$STATUS" != "healthy" ]; then
+            docker logs django_web_container
+            exit 1
+          fi
+
+      - name: Check Django DB connection
+        run: docker exec django_web_container python manage.py shell -c "from django.db import connection; connection.ensure_connection(); print('Connection Successful!')"
+
+      - name: Final cleanup
+        if: always()
+        run: docker compose -f docker/compose.yaml down -v
+
+      - name: Post-Run Cache Cleanup
+        if: always()
+        run: docker builder prune -f --filter "until=24h"
