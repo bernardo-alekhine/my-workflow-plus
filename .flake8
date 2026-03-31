@@ -1,6 +1,9 @@
 [flake8]
 max-line-length = 120
-extend-ignore = E203, W503
+# E203: whitespace before ':' (another common Black conflict)
+# W503: line break before binary operator
+# E701: multiple statements on one line (colon)
+extend-ignore = E203, W503, E701
 exclude =
     .git,
     __pycache__,
@@ -9,6 +12,7 @@ exclude =
     .venv,
     venv,
     env,
+    **/migrations/*,
     .tox
 max-complexity = 10
 per-file-ignores =

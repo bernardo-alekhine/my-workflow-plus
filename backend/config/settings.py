@@ -40,7 +40,7 @@ INSTALLED_APPS = [
     "django.contrib.messages",
     "django.contrib.staticfiles",
     "apps.core",
-    "apps.accounts",
+    "apps.users",
     "apps.inventory",
     "apps.human_resources",
     "apps.financial",
@@ -95,6 +95,8 @@ DATABASES = {
     )
 }
 
+
+AUTH_USER_MODEL = "users.User"
 
 # Password validation
 # https://docs.djangoproject.com/en/6.0/ref/settings/#auth-password-validators
