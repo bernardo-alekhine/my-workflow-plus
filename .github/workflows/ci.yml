@@ -146,7 +146,7 @@ jobs:
         run: docker compose -f docker/compose.yaml down -v
 
       - name: Run production container
-        run: docker compose -f docker/compose.yaml --profile dev up -d --build
+        run: docker compose -f docker/compose.yaml up -d --build
 
       - name: Verify health and DB
         run: |
