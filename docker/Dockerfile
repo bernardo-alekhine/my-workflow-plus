@@ -26,7 +26,7 @@ RUN /opt/venv/bin/pip install --no-cache-dir -r requirements/base-requirements.t
 FROM builder AS tester
 COPY . /app/
 RUN pip install --no-cache-dir -r requirements/dev-requirements.txt
-WORKDIR /app/backend/
+WORKDIR /app
 
 # Production stage
 FROM base AS production
