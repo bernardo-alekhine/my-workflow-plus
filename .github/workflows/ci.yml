@@ -16,7 +16,7 @@ jobs:
       DATABASE_URL: postgres://postgres:password@localhost:5432/test_db
       ALLOWED_HOSTS: "localhost,127.0.0.1"
       DEBUG: "False"
-    
+
     services:
       postgres:
         image: postgres:16
@@ -126,9 +126,12 @@ jobs:
           echo "DATABASE_URL=postgres://postgres:password@localhost:5432/test_db" >> .env
           echo "ALLOWED_HOSTS=localhost,127.0.0.1" >> .env
           echo "DEBUG=False" >> .env
+          echo "POSTGRES_USER=postgres" >> .env
+          echo "POSTGRES_PASSWORD=password" >> .env
+          echo "POSTGRES_DB=test_db" >> .env
 
       - name: Run docker compose integration
-        run: docker compose -f docker/compose.yaml --profile test --profile dev up --build --abort-on-container-exit --exit-code-from django_test
+        run: docker compose -f docker/compose.yaml --profile test up --build --abort-on-container-exit --exit-code-from django_test
 
       - name: Cleanup test containers
         if: always()
