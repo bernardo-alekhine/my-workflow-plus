@@ -49,17 +49,17 @@ Placeholder.
 - Must be fast efficient and reliable.
 - Must be thoroughly tested.
 
-### 3.2 Accounts
+### 3.2 Users
 
-#### 3.2.1 Accounts Functional Requirements
+#### 3.2.1 Users Functional Requirements
 
 | ID             | Requirement                                                                                     | Priority | Status |
 | -------------- | ----------------------------------------------------------------------------------------------- | -------- | ------ |
-| FR-ACCOUNTS-01 | System must allow administrators to create new users.                                           | High     | Todo   |
-| FR-ACCOUNTS-02 | Users should have fields for name, documents, picture and other identification fields.          | High     | Todo   |
-| FR-ACCOUNTS-03 | Users have a special field for type. This field determines the role of each user in the system. | High     | Todo   |
+| FR-USERS-01 | System must allow administrators to create new users.                                           | High     | Todo   |
+| FR-USERS-02 | Users should have fields for name, documents, picture and other identification fields.          | High     | Todo   |
+| FR-USERS-03 | Users have a special field for type. This field determines the role of each user in the system. | High     | Todo   |
 
-#### 3.2.2 Accounts Non Functional Requirements
+#### 3.2.2 Users Non Functional Requirements
 
 - Must be safe and reliable.
 - Robust authentication.
