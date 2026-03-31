@@ -103,6 +103,14 @@ jobs:
     name: Docker Integration
     needs: tests
     runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16
+        env:
+          POSTGRES_DB: test_db
+          POSTGRES_PASSWORD: password
+        ports:
+          - 5432:5432
     env:
       DJANGO_SETTINGS_MODULE: config.settings
       PYTHONPATH: ${{ github.workspace }}/backend
@@ -123,7 +131,7 @@ jobs:
         run: |
           echo "DJANGO_SECRET_KEY=${{ secrets.CI_DJANGO_SECRET_KEY }}" >> .env
           echo "APP_PORT=8000" >> .env
-          echo "DJANGO_DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/test_db" .env
+          echo "DJANGO_DATABASE_URL=postgres://postgres:password@host.docker.internal:5432/test_db" >> .env
           echo "DJANGO_ALLOWED_HOSTS=localhost,127.0.0.1,host.docker.internal,django_web" >> .env
           echo "DEBUG=False" >> .env
                 echo "POSTGRES_USER=postgres" >> .env
