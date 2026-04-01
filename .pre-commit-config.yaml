@@ -1,0 +1,42 @@
+repos:
+  - repo: https://github.com/pre-commit/pre-commit-hooks
+    rev: v6.0.0
+    hooks:
+      - id: trailing-whitespace
+
+  - repo: local
+    hooks:
+      - id: black
+        name: black
+        entry: black backend/
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: flake8
+        name: flake8
+        entry: flake8 backend/
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: pyright
+        name: pyright
+        entry: pyright backend/
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: mypy
+        name: mypy
+        entry: mypy backend/
+        language: system
+        pass_filenames: false
+        types: [python]
+
+      - id: pytest
+        name: django-tests
+        entry: pytest backend --ds=config.settings --cov=backend --cov-report=html
+        language: system
+        pass_filenames: false
+        always_run: true
