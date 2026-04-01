@@ -13,3 +13,4 @@ factory-boy
 pytest-cov
 pytest-django
 django-stubs
+pre-commit
