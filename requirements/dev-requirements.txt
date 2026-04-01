@@ -3,7 +3,7 @@
 black
 flake8
 pytest
-mypy
+mypy==1.20.0
 pyright[nodejs]
 pytest-django
 pip-audit
