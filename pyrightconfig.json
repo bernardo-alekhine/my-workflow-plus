@@ -1,0 +1,6 @@
+{
+  // Avoid false positives with Django and Factory boy
+  "typeCheckingMode": "standard",
+  "reportPrivateImportUsage": false,
+  "reportIncompatibleVariableOverride": false
+}
