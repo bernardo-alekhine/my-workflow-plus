@@ -3,7 +3,7 @@
 black
 flake8
 pytest
-mypy==1.20.0
+mypy
 pyright[nodejs]
 pytest-django
 pip-audit
@@ -12,5 +12,5 @@ django-extensions
 factory-boy
 pytest-cov
 pytest-django
-django-stubs==6.0.1
+django-stubs
 pre-commit
