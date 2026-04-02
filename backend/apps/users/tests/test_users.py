@@ -5,6 +5,7 @@ from .factories import UserFactory
 
 @pytest.mark.django_db
 class TestUsers:
+    # This is here just for template, redudant test
     def test_occupation_length_boundary(self):
         # Success at exactly 50
         UserFactory(occupation="A" * 50)
