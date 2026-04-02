@@ -1,6 +1,7 @@
 from django.contrib.auth.models import AbstractUser
 from django.db import models
 from django.core.validators import MinLengthValidator
+from apps.core.models import BaseModel
 
 
 # Create your models here.
@@ -29,3 +30,29 @@ class TaxRegistration(models.Model):
 
     def __str__(self):
         return f"{self.id_type}: {self.value} ({self.country_code})"
+
+
+class Address(BaseModel):
+    class Types(models.TextChoices):
+        HOUSE = "house", "House"
+        APT = "apt", "Apartment"
+        OFFICE = "off", "Office"
+
+    address_type = models.CharField(max_length=20, choices=Types.choices)
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+    street = models.CharField(max_length=100)
+    number = models.CharField(max_length=10)
+    neighborhood = models.CharField(max_length=100, blank=True)
+    line_2 = models.CharField(max_length=100, null=True, blank=True, help_text="Apartment, suite, unit, floor, etc.")
+    city = models.CharField(max_length=50)
+    state = models.CharField(max_length=50)
+    country = models.CharField(max_length=50)
+    complement = models.CharField(max_length=100, null=True, blank=True)
+    postal_code = models.CharField(max_length=20)
+    is_default = models.BooleanField(default=False)
+
+    class Meta:
+        verbose_name_plural = "Addresses"
+
+    def __str__(self):
+        return f"{self.street}, {self.number}, {self.city}, {self.state}, {self.country}"
