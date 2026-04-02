@@ -5,7 +5,6 @@ from django.core.validators import MinLengthValidator
 
 # Create your models here.
 class User(AbstractUser):
-    # tax_id = models.CharField(max_length=50, null=True, blank=True)
     occupation = models.CharField(max_length=50, null=True, blank=True)
 
 
