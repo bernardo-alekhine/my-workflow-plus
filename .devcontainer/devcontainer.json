@@ -2,17 +2,22 @@
   "name": "My WorkFlow+ Dev Envinroment",
 
   "image": "my-workflow-plus-dev-env:latest",
+
   // Build from the Dockerfile (uncomment to use)
   // "build": {
   //   "dockerfile": "Dockerfile",
   //   "context": ".."
   // },
+
+  // Initialize postgres container for development
+  "initializeCommand": "docker compose -f .devcontainer/compose.db.yaml up -d",
+
   "runArgs": [
         "--name", "my-workflow-plus-container"
   ],
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspaces/my-workflow-plus,type=bind,consistency=cached",
   "workspaceFolder": "/workspaces/my-workflow-plus",
-  
+
   "customizations": {
     "vscode": {
       "extensions": [
@@ -21,9 +26,12 @@
         "Codeium.codeium",
         "donjayamanne.githistory",
         "GitHub.vscode-pull-request-github",
-        "eamodio.gitlens"
+        "eamodio.gitlens",
+        "DavidAnson.vscode-markdownlint",
+        "ritwickdey.LiveServer",
+        "ms-azuretools.vscode-docker"
       ]
     }
   },
-  "postCreateCommand": "git config --global http.postBuffer 524288000"
+  "postCreateCommand": "bash .devcontainer/setup.sh"
 }

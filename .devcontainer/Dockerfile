@@ -8,8 +8,8 @@ RUN apt-get update && apt-get install -y \
     build-essential clang cmake gdb lldb valgrind && \
     curl -fsSL https://deb.nodesource.com/setup_lts.x | bash - && \
     apt-get update && apt-get install -y nodejs && \
-    rm -rf /var/lib/apt/lists/*
-    # python -m pip install --upgrade pip
+    rm -rf /var/lib/apt/lists/* \
+    python -m pip install --upgrade pip
 
 RUN echo 'export PS1="bernardo\w> "' >> /root/.bashrc && \
     echo '.mode qbox' > /root/.sqliterc
