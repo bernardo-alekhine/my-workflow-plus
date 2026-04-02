@@ -13,7 +13,7 @@ class TestTaxRegistration:
         assert cpf_tax_registration.user == user
 
     def test_user_can_have_multiple_tax_ids(self):
-        """ "Test that a user can have multiple tax ids"""
+        """Test that a user can have multiple tax ids"""
         user = UserFactory()
         TaxRegistrationFactory(user=user, id_type="CPF", value="11122233344")
         TaxRegistrationFactory(user=user, id_type="CNPJ", value="11222333000199")
@@ -28,6 +28,6 @@ class TestTaxRegistration:
             TaxRegistrationFactory(country_code="US", id_type="EIN", value="12-34567")
 
     def test_tax_registration_str(self):
-        """ "Test for expected string format when using __str__."""
+        """Test for expected string format when using __str__."""
         tax_id = TaxRegistrationFactory(country_code="US", id_type="EIN", value="12-34567")
         assert str(tax_id) == "EIN: 12-34567 (US)"

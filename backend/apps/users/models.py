@@ -51,14 +51,19 @@ class Address(BaseModel):
     postal_code = models.CharField(max_length=20)
     is_default = models.BooleanField(default=False)
 
-    class Meta:
-        verbose_name_plural = "Addresses"
-
     def set_as_default(self):
         """Only one user's address can be default. When one address set to True, all OTHERS are set to False."""
         Address.objects.filter(user=self.user).update(is_default=False)
         self.is_default = True
         self.save()
 
-        def __str__(self):
-            return f"{self.street}, {self.number}, {self.city}, {self.state}, {self.country}"
+    class Meta:
+        constraints = [
+            models.UniqueConstraint(
+                fields=["user"], condition=models.Q(is_default=True), name="unique_default_address_per_user"
+            )
+        ]
+        verbose_name_plural = "Addresses"
+
+    def __str__(self):
+        return f"{self.street}, {self.number}, {self.city}, {self.state}, {self.country}"
