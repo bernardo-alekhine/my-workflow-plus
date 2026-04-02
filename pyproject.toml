@@ -36,7 +36,7 @@ python_version = "3.12"
 # Required for Django projects:
 # strict = true
 mypy_path = "backend"
-plugins = ["mypy_django_plugin.main"] 
+plugins = ["mypy_django_plugin.main"]
 ignore_missing_imports = true
 exclude = [
     "node_modules",
@@ -55,6 +55,8 @@ reportArgumentType = "warning"
 pythonVersion = "3.12"
 include = ["backend/**"]
 # typeCheckingMode = "strict"
+reportPrivateImportUsage = "none"
+reportIncompatibleVariableOverride = "none"
 exclude = [
   ".venv",
   "**/.*",
@@ -62,7 +64,7 @@ exclude = [
   "**/venv**",
   "**/node_modules",
   "**/__pycache__",
-  "**/migrations",  
+  "**/migrations",
 ]
 
 [tool.pytest.ini_options]
