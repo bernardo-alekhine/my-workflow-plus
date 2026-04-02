@@ -7,10 +7,10 @@ from .factories import UserFactory, TaxRegistrationFactory
 class TestTaxRegistration:
     def test_user_tax_ids_relationship(self):
         """Test user has related attribute of tax_ids declared in tax registration, correct values and count."""
-        my_user = UserFactory(username="bernardo-alekhine")
-        cpf_tax_registration = TaxRegistrationFactory(user=my_user, id_type="CPF")
-        assert my_user.tax_ids.get(id=cpf_tax_registration.id).id_type == "CPF"
-        assert cpf_tax_registration.user == my_user
+        user = UserFactory()
+        cpf_tax_registration = TaxRegistrationFactory(user=user, id_type="CPF")
+        assert user.tax_ids.get(id=cpf_tax_registration.id).id_type == "CPF"
+        assert cpf_tax_registration.user == user
 
     def test_user_can_have_multiple_tax_ids(self):
         """ "Test that a user can have multiple tax ids"""
