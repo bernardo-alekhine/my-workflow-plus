@@ -31,7 +31,7 @@ class AddressFactory(factory.django.DjangoModelFactory):
     country = factory.Faker("country")
     complement = factory.Faker("secondary_address")
     postal_code = factory.Faker("postalcode")
-    is_default = factory.Iterator([False, True])
+    is_default: bool = False
 
     class Meta:
         model = Address
