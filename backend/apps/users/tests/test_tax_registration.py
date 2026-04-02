@@ -19,3 +19,10 @@ class TestTaxRegistration:
         with pytest.raises(IntegrityError):
             # Try to create the exact same record again
             TaxRegistrationFactory(country_code="US", id_type="EIN", value="12-34567")
+
+    def test_relationship_access(self):
+        """Test user has related attribute of tax_ids declared in tax registration and correct count."""
+        my_user = UserFactory(username="bernardo-alekhine")
+        TaxRegistrationFactory(user=my_user, id_type="CPF")
+        TaxRegistrationFactory(user=my_user, id_type="RG")
+        assert my_user.tax_ids.count() == 2
