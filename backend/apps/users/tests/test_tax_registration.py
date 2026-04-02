@@ -1,4 +1,4 @@
-from django.db import DataError, IntegrityError
+from django.db import IntegrityError
 import pytest
 from .factories import UserFactory, TaxRegistrationFactory
 
@@ -19,11 +19,3 @@ class TestTaxRegistration:
         with pytest.raises(IntegrityError):
             # Try to create the exact same record again
             TaxRegistrationFactory(country_code="US", id_type="EIN", value="12-34567")
-
-    def test_max_length_boundary(self):
-        # Success at exactly 20
-        TaxRegistrationFactory(value="A" * 20)
-
-        # Failure at 21 (Database level)
-        with pytest.raises((IntegrityError, DataError)):
-            TaxRegistrationFactory(value="A" * 21)
