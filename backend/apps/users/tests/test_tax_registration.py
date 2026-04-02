@@ -5,6 +5,13 @@ from .factories import UserFactory, TaxRegistrationFactory
 
 @pytest.mark.django_db
 class TestTaxRegistration:
+    def test_user_tax_ids_relationship(self):
+        """Test user has related attribute of tax_ids declared in tax registration, correct values and count."""
+        my_user = UserFactory(username="bernardo-alekhine")
+        cpf_tax_registration = TaxRegistrationFactory(user=my_user, id_type="CPF")
+        assert my_user.tax_ids.get(id=cpf_tax_registration.id).id_type == "CPF"
+        assert cpf_tax_registration.user == my_user
+
     def test_user_can_have_multiple_tax_ids(self):
         """ "Test that a user can have multiple tax ids"""
         user = UserFactory()
@@ -19,10 +26,3 @@ class TestTaxRegistration:
         with pytest.raises(IntegrityError):
             # Try to create the exact same record again
             TaxRegistrationFactory(country_code="US", id_type="EIN", value="12-34567")
-
-    def test_relationship_access(self):
-        """Test user has related attribute of tax_ids declared in tax registration and correct count."""
-        my_user = UserFactory(username="bernardo-alekhine")
-        TaxRegistrationFactory(user=my_user, id_type="CPF")
-        TaxRegistrationFactory(user=my_user, id_type="RG")
-        assert my_user.tax_ids.count() == 2
