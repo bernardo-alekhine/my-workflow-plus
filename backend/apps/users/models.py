@@ -54,5 +54,11 @@ class Address(BaseModel):
     class Meta:
         verbose_name_plural = "Addresses"
 
-    def __str__(self):
-        return f"{self.street}, {self.number}, {self.city}, {self.state}, {self.country}"
+    def set_as_default(self):
+        """Only one user's address can be default. When one address set to True, all OTHERS are set to False."""
+        Address.objects.filter(user=self.user).update(is_default=False)
+        self.is_default = True
+        self.save()
+
+        def __str__(self):
+            return f"{self.street}, {self.number}, {self.city}, {self.state}, {self.country}"
