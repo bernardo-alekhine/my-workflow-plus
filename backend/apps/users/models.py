@@ -38,8 +38,8 @@ class Address(BaseModel):
         APT = "apt", "Apartment"
         OFFICE = "off", "Office"
 
-    address_type = models.CharField(max_length=20, choices=Types.choices)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="addresses")
+    address_type = models.CharField(max_length=20, choices=Types.choices)
     street = models.CharField(max_length=100)
     number = models.CharField(max_length=10)
     neighborhood = models.CharField(max_length=100, blank=True)
